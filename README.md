@@ -2,7 +2,7 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni (sovellus on hyvässä vaiheessa mutta aloitan alusta ja poistan sen myöhemmässä vaiheessa(olin aikaisemmin tsohassa III periodissa))](http://palchyk.users.cs.helsinki.fi/tsoha/)
+* [Linkki sovellukseeni (sovellus on hyvässä vaiheessa mutta aloitan alusta ja poistan sen myöhemmässä vaiheessa(olin aikaisemmin tsohassa II periodissa))](http://palchyk.users.cs.helsinki.fi/tsoha/)
 * [Linkki dokumentaatiooni](https://github.com/palchyk/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
 
 ## Työn aihe
