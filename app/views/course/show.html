@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% import "macros/forms.html" as forms %}
+{% block content %}
+<p>{{message}}</p>
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in errors %}
+        <li>{{error}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if user_logged_in %}
+<h1> {{user_logged_in.name}} </h1>
+{% endif %}
+<!-- ... -->
+
+<h1>{{course.name}}</h1>
+<!-- Painikkeet tähän -->
+
+<form method="post" action="{{base_path}}/course/{{course.id}}/destroy" style="display: inline-block;">
+    <button type="submit" class="btn btn-danger">Poista kurssi</button>
+    <a href="{{base_path}}/course/{{course.id}}/edit" class="btn btn-default">Muokkaa</a>
+</form>
+<!-- Tiedot tulee listana tähän -->
+<ul>
+    <li><strong>Alkamispäivä:</strong> {{course.starts}}</li>
+    <li><strong>Päättymispäivä:</strong> {{course.ends}}</li>
+    <li><strong>Onko tilaa:</strong>
+        {% if course. status>0 %}
+        <label class="label label-success">tilaa
+            {% else %}
+            <label class="label label-danger">ei tilaa
+                {% endif %}
+                </li>
+                <li><strong>Pitäjä:</strong> {{course.publisher}}</li>
+                </ul>
+                <strong>Kuvaus:</strong> 
+                <p>
+                    {{course.description}}
+                </p>
+                {% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+  <p>{{message}}{{error}}</p>
+  <p>Tärkeää: Tämä sovellus on harjoitustyö. Älä käytä oikeaa salasanaasi, sillä salasanat tallennetaan tietokantaan selväkielisessä muodossa.</p>
+  {% if errors %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for error in errors %}
+          <li>{{error}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+  <h1>Rekisteröityminen</h1>
+
+  <!-- Kaikki lomakkeen elementit form-tagin sisään -->
+  <form method="post" action="{{base_path}}/user/register">
+    <!-- Tekstikenttä käyttäjätunnukselle -->
+    <div class="form-group">
+      <label>Käyttäjänimi</label>
+      <input type="text" name="username" class="form-control">
+    </div>
+
+    <!-- Salasanakenttä salasanalle -->
+    <div class="form-group">
+      <label>Salasana</label>
+      <input type="password" name="password" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Rekisteröidy</button>
+  </form>
+{% endblock %}

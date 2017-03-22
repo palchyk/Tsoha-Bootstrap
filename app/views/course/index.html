@@ -1,40 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Kurssitarjonta.</h1>
 
-  <p>
-    <a href="{{base_path}}/course/new" class="btn btn-success">Lisää kurssi</a>
-  </p>
+<p>{{message}}</p>
+<h1 class="text-center">Kurssitarjonta</h1>
 
-  <table class="table table-striped table-bordered">
+<p>
+    <a href="{{base_path}}/course/new" class="btn btn-block btn-success ">Lisää kurssi</a>
+</p>
+
+<table class="table table-striped table-bordered">
     <thead>
-      <tr>
-        <th>Nimi</th>
-        <th>Julkaisupäivä</th>
-        <th>Julkaisija</th>
-        <th>Status</th>
-        <th>Lisäyspäivä</th>
-        <th></th>
-      </tr>
+        <tr>
+            <th>Nimi</th>
+            <th>Alkamispäivä</th>
+            <th>Päättymispäivä</th>
+            <th>Pitäjä</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
     </thead>
 
     <tbody>
-      {% for course in courses %}
+        {% for course in courses %}
         <tr>
-          <td><a href="{{base_path}}/course/{{course.id}}">{{course.name}}</td>
-          <td>{{course.published}}</td>
-          <td>{{course.publisher}}</td>
-          <td>
-              {% if course.played %}
-                <label class="label label-success">pelattu
-              {% else %}
-                <label class="label label-danger">kesken
-              {% endif %}
-          </td>
-          <td>{{course.added}}</td>
-          <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.id}}/edit">Muokkaa</a></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% endblock %}
+            <td><a href="{{base_path}}/course/{{course.id}}">{{course.name}}</td>
+            <td>{{course.starts}}</td>
+            <td>{{course.ends}}</td>
+            <td>{{course.publisher}}</td>
+            <td>
+                {% if course.status > 0 %}
+                <label class="label label-success">tilaa
+                    {% else %}
+                    <label class="label label-danger">ei tilaa
+                        {% endif %}
+                        </td>
+
+                        <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.id}}/join">Ilmoittaudu</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
+                        {% endblock %}
