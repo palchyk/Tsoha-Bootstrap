@@ -67,6 +67,6 @@ $routes->post('/course/:id/destroy', function($id) {
 //$routes->get('/kurssit/1/edit', function() {
 //    HelloWorldController::course1edit();
 //});
-//$routes->get('/kirjaudu', function() {
-//    HelloWorldController::login();
-//});
+$routes->get('/kirjaudu', function() {
+    HelloWorldController::login();
+});
