@@ -2,8 +2,12 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni (sovellus on hyvässä vaiheessa mutta aloitan alusta ja poistan sen myöhemmässä vaiheessa(olin aikaisemmin tsohassa II periodissa))](http://palchyk.users.cs.helsinki.fi/tsoha/)
+* [Linkki etusivulle](http://palchyk.users.cs.helsinki.fi/tsoha/)
 * [Linkki dokumentaatiooni](https://github.com/palchyk/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
+* [Listaussivu(sama kuin etusivu)](http://palchyk.users.cs.helsinki.fi/tsoha/)
+* [Muokkaussivu esimerkki](http://palchyk.users.cs.helsinki.fi/tsoha/course/8/edit)
+* [Esittelysivut](http://palchyk.users.cs.helsinki.fi/tsoha/course/8)
+* [Kurssin luomisen sivu(vaatii kirjautumisen)](http://palchyk.users.cs.helsinki.fi/tsoha/course/new)
 
 ## Työn aihe
 

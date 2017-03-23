@@ -3,10 +3,7 @@
 
 
 class HelloWorldController extends BaseController {
-public static function login() {
-        // Testaa koodiasi täällä
-        View::make('login.html');
-    }
+
    
 
 //    public static function sandbox(){
@@ -43,5 +40,8 @@ public static function login() {
         Kint::dump($courses);
         Kint::dump($course1);
     }
-
+public static function login() {
+        // Testaa koodiasi täällä
+        View::make('login.html');
+    }
 }

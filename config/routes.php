@@ -1,12 +1,13 @@
 <?php
 
-$routes->get('/', function() {
-    CourseController::index();
-});
+
 
 //$routes->get('/course', function() {
 //    CourseController::index();
 //});
+$routes->get('/', function() {
+    CourseController::index();
+});
 $routes->post('/course', function() {
     CourseController::store();
 });
