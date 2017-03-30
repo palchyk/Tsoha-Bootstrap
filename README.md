@@ -4,6 +4,10 @@ Yleisiä linkkejä:
 
 * [Linkki etusivulle](http://palchyk.users.cs.helsinki.fi/tsoha/)
 * [Linkki dokumentaatiooni](https://github.com/palchyk/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
+
+
+Muita linkkejä:
+
 * [Listaussivu(sama kuin etusivu)](http://palchyk.users.cs.helsinki.fi/tsoha/)
 * [Muokkaussivu esimerkki](http://palchyk.users.cs.helsinki.fi/tsoha/course/8/edit)
 * [Esittelysivut](http://palchyk.users.cs.helsinki.fi/tsoha/course/8)
