@@ -26,22 +26,27 @@ class CourseController extends BaseController {
         $params = $_POST;
 
         $attributes = array(
+            
+            'description' => $params['description'],
+            'name' => $params['name'],  
             'id' => $id,
-            'name' => $params['name'],
+//            'status' => $params['status']
+            
 //            'publisher' => $params['publisher'],
 //            'starts' => $params['starts'],
 //            'ends' => $params['ends'],
-//            'description' => $params['description']
-        );
 
-        // Alustetaan Game-olio käyttäjän syöttämillä tiedoilla
+        );
+      
+
+        // Alustetaan Course-olio käyttäjän syöttämillä tiedoilla
         $course = new Course($attributes);
         $errors = $course->errors();
 
         if (count($errors) > 0) {
             View::make('course/edit.html', array('errors' => $errors, 'attributes' => $attributes));
         } else {
-            // Kutsutaan alustetun olion update-metodia, joka päivittää pelin tiedot tietokannassa
+            // Kutsutaan alustetun olion update-metodia, joka päivittää kurssin tiedot tietokannassa
             $course->update();
 
             Redirect::to('/course/' . $course->id, array('message' => 'Kurssia on muokattu onnistuneesti!'));
@@ -62,7 +67,7 @@ class CourseController extends BaseController {
     public static function store() {
         // POST-pyynnön muuttujat sijaitsevat $_POST nimisessä assosiaatiolistassa
         $params = $_POST;
-        // Alustetaan uusi Game-luokan olion käyttäjän syöttämillä arvoilla
+        // Alustetaan uusi Course-luokan olion käyttäjän syöttämillä arvoilla
         $attributes = new Course(array(
             'name' => $params['name'],
             'publisher' => $params['publisher'],
@@ -79,10 +84,10 @@ class CourseController extends BaseController {
         if (count($errors) == 0) {
             $course->save();
 
-            // Ohjataan käyttäjä lisäyksen jälkeen pelin esittelysivulle
+            // Ohjataan käyttäjä lisäyksen jälkeen kurssin esittelysivulle
             Redirect::to('/course/' . $course->id, array('message' => 'Kurssi on lisätty kirjastoosi!'));
         } else {
-            // Pelissä oli jotain vikaa :(
+            // Kurssissa oli jotain vikaa :(
             View::make('course/new.html', array('errors' => $errors, 'attributes' => $attributes));
         }
     }

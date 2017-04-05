@@ -26,15 +26,15 @@ $routes->post('/user/login', function() {
     UserController::handle_login();
 });
 $routes->get('/course/:id/edit', function($id) {
-    // Pelin muokkauslomakkeen esittäminen
+    // Kurssin muokkauslomakkeen esittäminen
     CourseController::edit($id);
 });
 $routes->post('/course/:id/edit', function($id) {
-    // Pelin muokkaaminen
+    // Kurssin muokkaaminen
     CourseController::update($id);
 });
 $routes->get('/course/:id/join', function($id) {
-    // Pelin muokkauslomakkeen esittäminen
+    // Kurssin muokkauslomakkeen esittäminen
     CourseController::join();
 });
 

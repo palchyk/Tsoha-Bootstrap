@@ -23,6 +23,18 @@ class Course extends BaseModel {
         return $errors;
     }
 
+    public function validate_description() {
+        $errors = array();
+        if ($this->description == '' || $this->description == null) {
+            $errors[] = 'Kuvaus ei saa olla tyhjä!';
+        }
+        if (strlen($this->description) < 10) {
+            $errors[] = 'Kuvauksen pituuden tulee olla vähintään kymmenen merkkiä!';
+        }
+
+        return $errors;
+    }
+
     public static function all() {
         $query = DB::connection()->prepare('SELECT * FROM Course');
         $query->execute();
@@ -43,12 +55,19 @@ class Course extends BaseModel {
 
         return $courses;
     }
-     public function update() {
-      $query = DB::connection()->prepare('UPDATE course SET name=:name WHERE id=:id');
-      $query->execute(array(
-          'name' => $this->name,
-          'id' => $this->id
-      ));
+
+    public function update() {
+        $query = DB::connection()->prepare('UPDATE course SET name=:name,description=:description WHERE id=:id');
+//      $query = DB::connection()->prepare('UPDATE course SET description=:description WHERE id=:id');      
+//       $query = DB::connection()->prepare('UPDATE course SET status=:status WHERE id=:id');
+
+        $query->execute(array(
+           'name' => $this->name ,
+           'description' => $this->description, 
+            'id' => $this->id, 
+//          'status' => $this->status  
+        ));
+
     }
 
     public static function find($id) {
@@ -73,16 +92,17 @@ class Course extends BaseModel {
 
         return null;
     }
+
     public function destroy() {
-      $query = DB::connection()->prepare('DELETE FROM course WHERE id=:id');
-      $query->execute(array('id' => $this->id));
+        $query = DB::connection()->prepare('DELETE FROM course WHERE id=:id');
+        $query->execute(array('id' => $this->id));
     }
-   
+
     public function save() {
         // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
-        $query = DB::connection()->prepare('INSERT INTO Course (name, publisher,status, starts,ends,description) VALUES (:name, :publisher,:status, :starts,:ends, :description) RETURNING id');
+        $query = DB::connection()->prepare('INSERT INTO Course (name,description, publisher,status, starts,ends) VALUES (:name, :description, :publisher,:status, :starts,:ends) RETURNING id');
         // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
-        $query->execute(array('name' => $this->name, 'publisher' => $this->publisher,'status' => $this->status, 'starts' => $this->starts, 'ends' => $this->ends, 'description' => $this->description));
+        $query->execute(array('name' => $this->name, 'description' => $this->description, 'publisher' => $this->publisher, 'status' => $this->status, 'starts' => $this->starts, 'ends' => $this->ends));
         // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
         $row = $query->fetch();
         // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi

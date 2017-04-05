@@ -8,8 +8,8 @@ CREATE TABLE Course(
   id SERIAL PRIMARY KEY,
   teacher_id INTEGER REFERENCES Student(id), -- Viiteavain Player-tauluun
   name varchar(50) NOT NULL,
-  starts DATE,
-  description varchar(400),
+    description varchar(400),
+    starts DATE,
   ends DATE,   
   publisher varchar(50),
   status integer 
