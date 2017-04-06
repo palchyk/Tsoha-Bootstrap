@@ -3,7 +3,9 @@
 class Course extends BaseModel {
 
     // Attribuutit
-    public $id, $teacher_id, $name, $starts, $description, $ends, $publisher, $status;
+    public $id, $teacher_id, $name, $starts, $description, $ends,  $publisher,
+//            $url, 
+            $status;
 
     // Konstruktori
     public function __construct($attributes) {
@@ -49,6 +51,7 @@ class Course extends BaseModel {
                 'description' => $row['description'],
                 'ends' => $row['ends'],
                 'publisher' => $row['publisher'],
+//                'url' => $row['url'],
                 'status' => $row['status']
             ));
         }
@@ -57,7 +60,9 @@ class Course extends BaseModel {
     }
 
     public function update() {
-        $query = DB::connection()->prepare('UPDATE course SET name=:name,description=:description WHERE id=:id');
+        $query = DB::connection()->prepare('UPDATE course SET '
+//                . 'url=:url,'
+                . 'starts=:starts,ends=:ends,publisher=:publisher,name=:name,description=:description,status=:status WHERE id=:id');
 //      $query = DB::connection()->prepare('UPDATE course SET description=:description WHERE id=:id');      
 //       $query = DB::connection()->prepare('UPDATE course SET status=:status WHERE id=:id');
 
@@ -65,7 +70,11 @@ class Course extends BaseModel {
            'name' => $this->name ,
            'description' => $this->description, 
             'id' => $this->id, 
-//          'status' => $this->status  
+          'status' => $this->status,
+            'starts' => $this->starts,
+            'ends' => $this->ends,
+//            'url' => $this->url,
+            'publisher' => $this->publisher
         ));
 
     }
@@ -84,6 +93,7 @@ class Course extends BaseModel {
                 'description' => $row['description'],
                 'ends' => $row['ends'],
                 'publisher' => $row['publisher'],
+//                'url' => $row['url'],
                 'status' => $row['status']
             ));
 
@@ -100,9 +110,15 @@ class Course extends BaseModel {
 
     public function save() {
         // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
-        $query = DB::connection()->prepare('INSERT INTO Course (name,description, publisher,status, starts,ends) VALUES (:name, :description, :publisher,:status, :starts,:ends) RETURNING id');
+        $query = DB::connection()->prepare('INSERT INTO Course (name,'
+//                . 'url,'
+                . 'description, publisher,status, starts,ends) VALUES (:name,'
+                //. ':url,'
+                . ' :description, :publisher,:status, :starts,:ends) RETURNING id');
         // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
-        $query->execute(array('name' => $this->name, 'description' => $this->description, 'publisher' => $this->publisher, 'status' => $this->status, 'starts' => $this->starts, 'ends' => $this->ends));
+        $query->execute(array('name' => $this->name,
+//            'url' => $this->url,
+            'description' => $this->description, 'publisher' => $this->publisher, 'status' => $this->status, 'starts' => $this->starts, 'ends' => $this->ends));
         // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
         $row = $query->fetch();
         // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi

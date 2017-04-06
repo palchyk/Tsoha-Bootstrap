@@ -18,12 +18,36 @@
     </div>
     <div class="form-group">
         <label class="control-label">Muokkaa kurssin kuvausta:</label>
-        <input type="text" description="description" class="form-control" value="{{course.description}}">
+        <input type="text" name="description" class="form-control" value="{{course.description}}">
 
     </div>
         <div class="form-group">
         <label class="control-label">Muokkaa kurssin tilaa:</label>
-        <input type="integer" status="status" class="form-control" value="{{course.status}}">
+        <input type="text" name="status" class="form-control" value="{{course.status}}">
+
+  
+    </div>
+        <div class="form-group">
+        <label class="control-label">Muokkaa kurssin alkua:</label>
+        <input type="text" name="starts" class="form-control" value="{{course.starts}}">
+
+    
+    </div>
+        <div class="form-group">
+        <label class="control-label">Muokkaa kurssin loppua:</label>
+        <input type="text" name="ends" class="form-control" value="{{course.ends}}">
+
+    
+    </div>
+        <div class="form-group">
+        <label class="control-label">Muokkaa kurssin julkasijaa:</label>
+        <input type="text" name="publisher" class="form-control" value="{{course.publisher}}">
+
+    </div>
+   
+        <div class="form-group">
+        <label class="control-label">Muokkaa kurssin videolinkkiä:</label>
+        <input type="text" name="url" class="form-control" value="{{course.url}}">
 
     </div>
     <button type="submit" class="btn btn-primary">Lähetä</button>

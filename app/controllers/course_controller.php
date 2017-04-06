@@ -30,11 +30,11 @@ class CourseController extends BaseController {
             'description' => $params['description'],
             'name' => $params['name'],  
             'id' => $id,
-//            'status' => $params['status']
-            
-//            'publisher' => $params['publisher'],
-//            'starts' => $params['starts'],
-//            'ends' => $params['ends'],
+            'status' => $params['status'],
+//            'url' => $params['url'],
+            'publisher' => $params['publisher'],
+            'starts' => $params['starts'],
+           'ends' => $params['ends'],
 
         );
       
@@ -74,6 +74,7 @@ class CourseController extends BaseController {
             'status' => $params['status'],
             'starts' => $params['starts'],
             'ends' => $params['ends'],
+//            'url' => $params['url'],
             'description' => $params['description']
         ));
 
