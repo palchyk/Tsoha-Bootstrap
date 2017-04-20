@@ -10,7 +10,7 @@ class Course extends BaseModel {
     // Konstruktori
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_name');
+        $this->validators = array('validate_name','validate_description','validate_publisher');
     }
     public function save() {
         // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
@@ -48,6 +48,17 @@ class Course extends BaseModel {
         }
         if (strlen($this->description) < 10) {
             $errors[] = 'Kuvauksen pituuden tulee olla vähintään kymmenen merkkiä!';
+        }
+
+        return $errors;
+    }
+     public function validate_publisher() {
+        $errors = array();
+        if ($this->publisher == '' || $this->publisher == null) {
+            $errors[] = 'Julkaisijan nimi ei saa olla tyhjä!';
+        }
+        if (strlen($this->description) < 10) {
+            $errors[] = 'Julkaisijan nimen pituuden tulee olla vähintään kymmenen merkkiä!';
         }
 
         return $errors;
