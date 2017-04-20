@@ -47,7 +47,7 @@ CourseController::update($id);
 
 
 $routes->post('/course/:id/destroy', function($id) {
-// Pelin poisto
+
 CourseController::destroy($id);
 });
 $routes->get('/user/register', function(){

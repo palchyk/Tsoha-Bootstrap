@@ -19,7 +19,7 @@ class Course extends BaseModel {
                 . 'description, publisher,status, starts,ends) VALUES (:name,'
                 . ':url,'
                 . ' :description, :publisher,:status, :starts,:ends) RETURNING id');
-        // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
+ 
         $query->execute(array('name' => $this->name,
             'url' => $this->url,
             'description' => $this->description, 'publisher' => $this->publisher, 'status' => $this->status, 'starts' => $this->starts, 'ends' => $this->ends));

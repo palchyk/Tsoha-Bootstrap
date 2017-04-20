@@ -1,6 +1,6 @@
 CREATE TABLE Student(
-  id SERIAL PRIMARY KEY, -- SERIAL tyyppinen pääavain pitää huolen, että tauluun lisätyllä rivillä on aina uniikki pääavain. Kätevää!
-  username varchar(50) NOT NULL, -- Muista erottaa sarakkeiden määrittelyt pilkulla!
+  id SERIAL PRIMARY KEY, 
+  username varchar(50) NOT NULL,
   password varchar(50) NOT NULL
 );
 

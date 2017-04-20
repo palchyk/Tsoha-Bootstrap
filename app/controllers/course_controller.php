@@ -91,14 +91,14 @@ class CourseController extends BaseController {
         );
       
 
-        // Alustetaan Course-olio käyttäjän syöttämillä tiedoilla
+        
         $course = new Course($attributes);
         $errors = $course->errors();
 
         if (count($errors) > 0) {
             View::make('course/edit.html', array('errors' => $errors, 'attributes' => $attributes));
         } else {
-            // Kutsutaan alustetun olion update-metodia, joka päivittää kurssin tiedot tietokannassa
+            
             $course->update();
 
             Redirect::to('/course/' . $course->id, array('message' => 'Kurssia on muokattu onnistuneesti!'));
@@ -106,13 +106,9 @@ class CourseController extends BaseController {
     }
 
     public static function destroy($id) {
-        self::check_logged_in();
-        // Alustetaan Game-olio annetulla id:llä
-        $course = new Course(array('id' => $id));
-        // Kutsutaan Game-malliluokan metodia destroy, joka poistaa pelin sen id:llä
+        self::check_logged_in();        //
+        $course = new Course(array('id' => $id));      
         $course->destroy();
-
-        // Ohjataan käyttäjä pelien listaussivulle ilmoituksen kera
         Redirect::to('/', array('message' => 'Kurssi on poistettu onnistuneesti!'));
     }
 //    public static function join() {
