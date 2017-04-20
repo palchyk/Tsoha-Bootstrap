@@ -10,14 +10,19 @@
       </ul>
     </div>
   {% endif %}
-  <form method="post" action="{{base_path}}/course/{{course.id}}/join">
+  <form method="post" action="{{base_path}}/participate">
+      <!--<div class="form-group">
+        <label class="control-label">Kurssin nimi:</label>
+        <input type="text" name="name" class="form-control" value="{{course.name}}">
+
+    </div>-->
     <div class="form-group">
       <label class="control-label">Kerro nimesi:</label>
-      <input type="text" name="name" class="form-control" value="{{course.name}}">
+      <input type="text" name="fullname" class="form-control">
     </div>
       <div class="form-group">
       <label class="control-label">Kerro opiskelijatunnuksesi:</label>
-      <input type="text" name="name" class="form-control" value="{{course.name}}">
+      <input type="text" name="studentnumber" class="form-control"  >
     </div>
     <button type="submit" class="btn btn-primary">Ilmoittaudu!</button>
   </form>

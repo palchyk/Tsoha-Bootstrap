@@ -18,28 +18,39 @@
 <!-- ... -->
 
 <h1>{{course.name}}</h1>
+</p> <p>
 <!-- Painikkeet tähän -->
 
 <form method="post" action="{{base_path}}/course/{{course.id}}/destroy" style="display: inline-block;">
     <button type="submit" class="btn btn-danger">Poista kurssi</button>
-    <a href="{{base_path}}/course/{{course.id}}/edit" class="btn btn-default">Muokkaa</a>
-</form>
-<!-- Tiedot tulee listana tähän -->
-<ul>
-    <li><strong>Alkamispäivä:</strong> {{course.starts}}</li>
-    <li><strong>Päättymispäivä:</strong> {{course.ends}}</li>
-    <li><strong>Onko tilaa:</strong>
-        {% if course. status>0 %}
-        <label class="label label-success">tilaa
-            {% else %}
-            <label class="label label-danger">ei tilaa
-                {% endif %}
-                </li>
-                <li><strong>Pitäjä:</strong> {{course.publisher}}</li>
-                </ul>
-                <strong>Kuvaus:</strong> 
-                <p>
-                    {{course.description}}
-                </p>
-                <iframe width="420" height="315" src="{{course.url}}" frameborder="0" allowfullscreen></iframe>
-                {% endblock %}
+    
+
+    
+        <a href="{{base_path}}/course/{{course.id}}/edit" class="btn btn-default">Muokkaa</a>
+        <a href="{{base_path}}/course/{{course.id}}/join" class="btn btn-success">Ilmoittaudu kurssille</a>
+        </p>             
+                      <p>
+    </form>
+    <!-- Tiedot tulee listana tähän -->
+    <ul>
+        <li><strong>Alkamispäivä:</strong> {{course.starts}}</li>
+        <li><strong>Päättymispäivä:</strong> {{course.ends}}</li>
+        <li><strong>Onko tilaa:</strong>
+            {% if course. status>0 %}
+            <label class="label label-success">tilaa
+                {% else %}
+                <label class="label label-danger">ei tilaa
+                    {% endif %}
+                    </li>
+                    <li><strong>Pitäjä:</strong> {{course.publisher}}</li>
+                    </ul>
+                    <h2>Kuvaus:</h2> 
+                    <p>
+                        {{course.description}}
+                    </p>
+                    <h2>Video:</h2> 
+                    <p>
+                        
+                    </p>
+                    <iframe width="420" height="315" src="{{course.url}}" frameborder="0" allowfullscreen></iframe>
+                    {% endblock %}

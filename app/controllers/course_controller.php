@@ -17,10 +17,62 @@ class CourseController extends BaseController {
         self::check_logged_in();
         View::make('course/new.html');
     }
-    public static function join() {
-        self::check_logged_in();
-        View::make('course/join.html');
+    public static function store() {
+        // POST-pyynnön muuttujat sijaitsevat $_POST nimisessä assosiaatiolistassa
+        $params = $_POST;
+        // Alustetaan uusi Course-luokan olion käyttäjän syöttämillä arvoilla
+        $attributes = new Course(array(
+            'name' => $params['name'],
+            'publisher' => $params['publisher'],
+            'status' => $params['status'],
+            'starts' => $params['starts'],
+            'ends' => $params['ends'],
+            'url' => $params['url'],
+            'description' => $params['description']
+        ));
+
+//         Kint::dump($params);
+        // Kutsutaan alustamamme olion save metodia, joka tallentaa olion tietokantaan
+        $course = new Course($attributes);
+        $errors = $course->errors();
+        if (count($errors) == 0) {
+            $course->save();
+
+            // Ohjataan käyttäjä lisäyksen jälkeen kurssin esittelysivulle
+            Redirect::to('/course/' . $course->id, array('message' => 'Kurssi on lisätty kirjastoosi!'));
+        } else {
+            // Kurssissa oli jotain vikaa :(
+            View::make('course/new.html', array('errors' => $errors, 'attributes' => $attributes));
+        }
     }
+//    public static function join() {
+//        self::check_logged_in();
+//        View::make('course/join.html');
+//    }
+//    public static function participate() {
+//        $params = $_POST;
+//
+//        $attributes = array(
+//            
+//            'studentnumber' => $params['studentnumber'],
+//            'fullname' => $params['fullname'],              
+//
+//        );
+//      
+//
+//        // Alustetaan Course-olio käyttäjän syöttämillä tiedoilla
+//        $participants = new Participants($attributes);
+//        $errors = $participants->errors();
+//
+//        if (count($errors) > 0) {
+//            View::make('course/join.html', array('errors' => $errors, 'attributes' => $attributes));
+//        } else {
+//            // Kutsutaan alustetun olion update-metodia, joka päivittää kurssin tiedot tietokannassa
+//            $participants->save();
+//
+//            Redirect::to('/course/' . $course->id, array('message' => 'Olet ilmoittautunut onnistuneesti!'));
+//        }
+//    }
 
     public static function update($id) {
         $params = $_POST;
@@ -31,7 +83,7 @@ class CourseController extends BaseController {
             'name' => $params['name'],  
             'id' => $id,
             'status' => $params['status'],
-//            'url' => $params['url'],
+            'url' => $params['url'],
             'publisher' => $params['publisher'],
             'starts' => $params['starts'],
            'ends' => $params['ends'],
@@ -63,35 +115,18 @@ class CourseController extends BaseController {
         // Ohjataan käyttäjä pelien listaussivulle ilmoituksen kera
         Redirect::to('/', array('message' => 'Kurssi on poistettu onnistuneesti!'));
     }
+//    public static function join() {
+//        self::check_logged_in();
+        // Alustetaan Game-olio annetulla id:llä
+//        $course = new Course(array('id' => $id));
+        // Kutsutaan Game-malliluokan metodia destroy, joka poistaa pelin sen id:llä
+//        $course->destroy();
 
-    public static function store() {
-        // POST-pyynnön muuttujat sijaitsevat $_POST nimisessä assosiaatiolistassa
-        $params = $_POST;
-        // Alustetaan uusi Course-luokan olion käyttäjän syöttämillä arvoilla
-        $attributes = new Course(array(
-            'name' => $params['name'],
-            'publisher' => $params['publisher'],
-            'status' => $params['status'],
-            'starts' => $params['starts'],
-            'ends' => $params['ends'],
-//            'url' => $params['url'],
-            'description' => $params['description']
-        ));
+        // Ohjataan käyttäjä pelien listaussivulle ilmoituksen kera
+//        Redirect::to('/', array('message' => 'Ilmoittauduit onnistuneesti onnistuneesti!'));
+//    }
 
-//         Kint::dump($params);
-        // Kutsutaan alustamamme olion save metodia, joka tallentaa olion tietokantaan
-        $course = new Course($attributes);
-        $errors = $course->errors();
-        if (count($errors) == 0) {
-            $course->save();
-
-            // Ohjataan käyttäjä lisäyksen jälkeen kurssin esittelysivulle
-            Redirect::to('/course/' . $course->id, array('message' => 'Kurssi on lisätty kirjastoosi!'));
-        } else {
-            // Kurssissa oli jotain vikaa :(
-            View::make('course/new.html', array('errors' => $errors, 'attributes' => $attributes));
-        }
-    }
+    
 
     public static function show($id) {
         $course = Course::find($id);

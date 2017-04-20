@@ -1,57 +1,65 @@
 <?php
 
-
-
 //$routes->get('/course', function() {
 //    CourseController::index();
 //});
 $routes->get('/', function() {
-    CourseController::index();
+CourseController::index();
 });
 $routes->post('/course', function() {
-    CourseController::store();
+CourseController::store();
 });
 $routes->get('/course/new', function() {
-    CourseController::create();
-});
+CourseController::create();}
+);
 $routes->get('/course/:id', function($id) {
-    CourseController::show($id);
+CourseController::show($id);
 });
-$routes->get('/user/login', function() {
-    // Kirjautumislomakkeen esittäminen
-    UserController::login();
+$routes->get('/course/:id/join', function() {
+
+ParticipantsController::join();
 });
-$routes->post('/user/login', function() {
-    // Kirjautumisen käsittely
-    UserController::handle_login();
-});
-$routes->get('/course/:id/edit', function($id) {
-    // Kurssin muokkauslomakkeen esittäminen
-    CourseController::edit($id);
-});
-$routes->post('/course/:id/edit', function($id) {
-    // Kurssin muokkaaminen
-    CourseController::update($id);
-});
-$routes->get('/course/:id/join', function($id) {
-    // Kurssin muokkauslomakkeen esittäminen
-    CourseController::join();
+$routes->post('/participate', function() {
+ParticipantsController::participate();
 });
 
-$routes->post('/course/:id/destroy', function($id) {
-    // Pelin poisto
-    CourseController::destroy($id);
+
+$routes->get('/course/:id', function($id) {
+    ParticipantsController::show($id);
 });
- $routes->get('/user/register', function(){
-    UserController::register();
-  });
-  
-  $routes->post('/user/register', function(){
-    UserController::store();
-  });
-   $routes->post('/logout', function(){
-    UserController::logout();
-  });
+
+$routes->get('/user/login', function() {
+// Kirjautumislomakkeen esittäminen
+UserController::login();
+});
+$routes->post('/user/login', function() {
+// Kirjautumisen käsittely
+UserController::handle_login();
+});
+$routes->get('/course/:id/edit', function($id) {
+// Kurssin muokkauslomakkeen esittäminen
+CourseController::edit($id);
+});
+$routes->post('/course/:id/edit', function($id) {
+// Kurssin muokkaaminen
+CourseController::update($id);
+});
+
+
+$routes->post('/course/:id/destroy', function($id) {
+// Pelin poisto
+CourseController::destroy($id);
+});
+$routes->get('/user/register', function(){
+UserController::register();
+});
+
+$routes->post('/user/register', function(){
+UserController::store();
+});
+$routes->post('/logout', function(){
+UserController::logout();
+});
 
 //$routes->get('/hiekkalaatikko', function() {
 //    HelloWorldController::sandbox();
@@ -69,5 +77,5 @@ $routes->post('/course/:id/destroy', function($id) {
 //    HelloWorldController::course1edit();
 //});
 $routes->get('/kirjaudu', function() {
-    HelloWorldController::login();
+HelloWorldController::login();
 });
