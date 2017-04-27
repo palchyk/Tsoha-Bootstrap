@@ -28,7 +28,7 @@ class UserController extends BaseController {
         $student = Student::authenticate($params['username'], $params['password']);
 
         if (!$student) {
-            View::make('user/login.html', array('error' => 'Väärä käyttäjätunnus tai salasana!', 'username' => $params['username']));
+            View::make('user/login.html', array('message' => 'Väärä käyttäjätunnus tai salasana!', 'username' => $params['username']));
         } else {
              $_SESSION['student'] = $student->id;
 
@@ -54,7 +54,7 @@ class UserController extends BaseController {
     }
      public static function logout(){
       $_SESSION['student'] = null;
-      Redirect::to('/user/login', array('message' => 'Olet kirjautunut ulos!'));
+      Redirect::to('/', array('message' => 'Olet kirjautunut ulos!'));
     }
 
 }

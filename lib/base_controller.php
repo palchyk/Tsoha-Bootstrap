@@ -10,6 +10,9 @@ class BaseController {
         }
         return null;
     }
+    public static function owner(){
+        
+    }
 
     public static function check_logged_in() {
         if (!isset($_SESSION['student'])) {

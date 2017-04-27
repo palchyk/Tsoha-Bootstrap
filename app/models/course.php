@@ -12,24 +12,25 @@ class Course extends BaseModel {
     public function __construct($attributes) {
         parent::__construct($attributes);
         $this->validators = array('validate_name', 'validate_description', 'validate_publisher');
+//        new Participants($attributes);
     }
 
     public function save() {
         // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
         $query = DB::connection()->prepare('INSERT INTO Course (name,'
                 . 'url,description,'
-        .  'teacher_id,'
+                . 'teacher_id,'
                 . ' publisher,status, starts,ends)'
                 . ' VALUES (:name,:url,:description,'
-      . ';teacher_id,'
+                . ':teacher_id,'
                 . ' :publisher,:status, :starts,:ends) RETURNING id');
 
         $query->execute(array(
-            'teacher_id'=>$this->teacher_id,
+            'teacher_id' => $this->teacher_id,
             'name' => $this->name,
             'url' => $this->url,
-            
-            'description' => $this->description, 'publisher' => $this->publisher, 'status' => $this->status, 'starts' => $this->starts, 'ends' => $this->ends));
+            'description' => $this->description, 'publisher' => $this->publisher,
+            'status' => $this->status, 'starts' => $this->starts, 'ends' => $this->ends));
         // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
         $row = $query->fetch();
         // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
@@ -95,13 +96,14 @@ class Course extends BaseModel {
     }
 
     public function update() {
-        $query = DB::connection()->prepare('UPDATE course SET url=:url,teacher_id=;teacher_id,'
+        $query = DB::connection()->prepare('UPDATE course SET url=:url,'
+//                . 'teacher_id=;teacher_id,'
                 . 'starts=:starts,ends=:ends,publisher=:publisher,name=:name,'
                 . 'description=:description,status=:status WHERE id=:id');
 
         $query->execute(array(
             'name' => $this->name,
-            'teacher_id'=>$this->teacher_id,
+//            'teacher_id'=>$this->teacher_id,
             'description' => $this->description,
             'id' => $this->id,
             'status' => $this->status,

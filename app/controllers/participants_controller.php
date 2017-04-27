@@ -13,6 +13,8 @@ class ParticipantsController extends BaseController {
         $attributes = new Participants(array(
             'studentnumber' => $params['studentnumber'],
             'fullname' => $params['fullname'],
+            'participant_id' => 0
+//            self::get_student_logged_in()->id,
         ));
         $participants = new Participants($attributes);
         $errors = $participants->errors();

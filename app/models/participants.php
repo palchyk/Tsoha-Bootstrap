@@ -2,15 +2,14 @@
 
 class Participants extends BaseModel {
 
-    public $fullname, $studentnumber;
+    public $fullname, $studentnumber, $participant_id;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-         $this->validators = array('validate_studentnumber','validate_fullname');
-
-       
+        $this->validators = array('validate_studentnumber', 'validate_fullname');
     }
-      public function validate_fullname() {
+
+    public function validate_fullname() {
         $errors = array();
         if ($this->fullname == '' || $this->fullname == null) {
             $errors[] = 'Nimi ei saa olla tyhjä!';
@@ -21,6 +20,7 @@ class Participants extends BaseModel {
 
         return $errors;
     }
+
     public function validate_studentnumber() {
         $errors = array();
         if ($this->studentnumber == '' || $this->studentnumber == null) {
@@ -32,18 +32,20 @@ class Participants extends BaseModel {
 
         return $errors;
     }
+
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO Participants (fullname,studentnumber) VALUES (:fullname,:studentnumber) RETURNING id');
-        $query->execute(array('fullname' => $this->fullname, 'studentnumber' => $this->studentnumber));
+        $query = DB::connection()->prepare('INSERT INTO Participants (praticipant_id,fullname,studentnumber) '
+                . 'VALUES (:participant_id,:fullname,:studentnumber) RETURNING id');
+        $query->execute(array('participant_id' => $this->participant_id, 'fullname' => $this->fullname,
+            'studentnumber' => $this->studentnumber));
         $row = $query->fetch();
         $this->id = $row['id'];
     }
 
-    public function join() {
-        $query = DB::connection()->prepare('INSERT INTO Participants(studentnumber,fullname) RETURNING id');
-        $query->execute(array('studentnumber' => $this->studentnumber, 'fullname' => $this->fullname));
-        $row = $query->fetch();
-        $this->id = $row['id'];
-    }
-
+//    public function join() {
+//        $query = DB::connection()->prepare('INSERT INTO Participants(studentnumber,fullname) RETURNING id');
+//        $query->execute(array('studentnumber' => $this->studentnumber, 'fullname' => $this->fullname));
+//        $row = $query->fetch();
+//        $this->id = $row['id'];
+//    }
 }

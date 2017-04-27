@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 
-  <p>{{message}}{{error}}</p>
-  <p>Tärkeää: Tämä sovellus on harjoitustyö. Älä käytä oikeaa salasanaasi, sillä salasanat tallennetaan tietokantaan selväkielisessä muodossa.</p>
+  
+ <!-- <div class="alert alert-danger">
+  <strong>Tärkeää:</strong> Tämä sovellus on harjoitustyö.
+      Älä käytä oikeaa salasanaasi, sillä salasanat tallennetaan tietokantaan selväkielisessä muodossa
+ <p>{{message}}{{error}}</p>
+</div>-->
+  
   {% if errors %}
     <div class="alert alert-danger">
       <ul>
@@ -27,6 +32,11 @@
       <label>Salasana</label>
       <input type="password" name="password" class="form-control">
     </div>
+     <!--<div class="form-group">
+      <label>Salasana uudestaan</label>
+      <input type="password" name="password" class="form-control">
+    </div>-->
+
 
     <button type="submit" class="btn btn-primary">Rekisteröidy</button>
   </form>

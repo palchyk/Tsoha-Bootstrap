@@ -2,7 +2,7 @@
 {% import "macros/forms.html" as forms %}
 {% block content %}
 {% if message %}
-<div class="alert alert-success" role="alert">
+<div class="alert alert-info" role="alert">
     <ul>
         <li>{{message}}</li>
     </ul>
@@ -26,12 +26,14 @@
 <h1>{{course.name}}</h1>
 </p> <p>
     <!-- Painikkeet tähän -->
-    {% if owner %}
+    {% if true %}
 <form method="post" action="{{base_path}}/course/{{course.id}}/destroy" style="display: inline-block;">
     <button type="submit" class="btn btn-danger">Poista kurssi</button>
     <a href="{{base_path}}/course/{{course.id}}/edit" class="btn btn-default">Muokkaa</a>
     {% endif %}
+    {% if course.status>0 %}
     <a href="{{base_path}}/course/{{course.id}}/join" class="btn btn-success">Ilmoittaudu kurssille</a>
+    {% endif %}
 </p>             
 <p>
 </form>
@@ -52,9 +54,34 @@
                 <p>
                     {{course.description}}
                 </p>
-                <h2>Video:</h2> 
+                <h2></h2> 
                 <p>
 
                 </p>
+                {% if course.url=="" %}  
+                <h2>  </h2> 
+                {% else %}
+                <h2>Video:</h2>
                 <iframe width="420" height="315" src="{{course.url}}" frameborder="0" allowfullscreen></iframe>
+                {% endif %}
+                <h2>Osallistujat:</h2> 
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nimi</th>
+                            <th>Käyttäjätunnus</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for review in reviews %}
+                        <tr>
+                            <td>{{participants.nimi}}</td>
+                            <td>{{participants.opiskelijanumero}}</td>                             
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
                 {% endblock %}
