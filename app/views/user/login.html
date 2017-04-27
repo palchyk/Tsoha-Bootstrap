@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-  <p>{{message}}{{error}}</p>
+{% if message %}
+        <div class="alert alert-success" role="alert">
+            <ul>
+                <li>{{message}}</li>
+            </ul>
+        </div>
+        {% endif %}
+  
   {% if errors %}
     <div class="alert alert-danger">
       <ul>
@@ -28,6 +35,7 @@
 
     <button type="submit" class="btn btn-primary">Login</button>
   </form>
-  
-  <p>Uusi käyttäjä? Rekisteröidy <a href="{{base_path}}/user/register">täällä</a>
+  <div class="alert alert-info" role="alert">
+  <p>
+      Uusi käyttäjä? Rekisteröidy <a href="{{base_path}}/user/register">täällä</a></div>
 {% endblock %}

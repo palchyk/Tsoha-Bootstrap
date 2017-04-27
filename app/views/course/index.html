@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p>{{message}}</p>
+
+        {% if message %}
+        <div class="alert alert-success" role="alert">
+            <ul>
+                <li>{{message}}</li>
+            </ul>
+        </div>
+        {% endif %} 
+
 <h1 class="text-center">Kurssitarjonta</h1>
 
 <p>
@@ -34,8 +42,9 @@
                     <label class="label label-danger">ei tilaa
                         {% endif %}
                         </td>
-
+                        {% if course.status > 0 %}    
                         <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.id}}/join">Ilmoittaudu</a></td>
+                        {% endif %}
                         </tr>
                         {% endfor %}
                         </tbody>

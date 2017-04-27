@@ -8,11 +8,11 @@ class UserController extends BaseController {
             'username' => $params['username'],
             'password' => $params['password']
         );
-        $user = new Student($attributes);
-        $errors = $user->errors();
+        $student = new Student($attributes);
+        $errors = $student->errors();
        
         if (count($errors) == 0) {
-            $user->save();        
+            $student->save();        
             Redirect::to('/user/login', array('message' => 'Rekisteröidyit onnistuneesti, ' . $params['username'], 'username' => $params['username']));
         } else {
             Redirect::to('/user/register', array('errors' => $errors, 'attributes' => $attributes));
@@ -34,7 +34,19 @@ class UserController extends BaseController {
 
             $_SESSION['username'] = $student->username;
 
-            Redirect::to('/', array('message' => 'Tervetuloa takaisin ' . $student->username . '!'));
+            Redirect::to('/', array('message' => 'Tervetuloa ' . $student->username . '!'));
+        }
+    }
+     public static function handle_registration() {
+        $params = $_POST;
+        Kint::dump($params);
+        $user = Student::save($params['username'], $params['password']);
+        Kint::dump($student);
+        if (!$student) {
+            View::make('account/register.html', array('errors' => array('Käyttäjätunnus on jo varattu!')));
+        } else {
+            $_SESSION['student'] = $student->id;
+            Redirect::to('/', array('message' => 'Registered user ' . $student->username . '.'));
         }
     }
      public static function register() {

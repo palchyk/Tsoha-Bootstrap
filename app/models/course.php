@@ -3,25 +3,32 @@
 class Course extends BaseModel {
 
     // Attribuutit
-    public $id, $teacher_id, $url,  $name, $starts, $description, $ends,  $publisher,
-           
+    public $id,
+            $teacher_id,
+            $url, $name, $starts, $description, $ends, $publisher,
             $status;
 
     // Konstruktori
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_name','validate_description','validate_publisher');
+        $this->validators = array('validate_name', 'validate_description', 'validate_publisher');
     }
+
     public function save() {
         // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
         $query = DB::connection()->prepare('INSERT INTO Course (name,'
-                . 'url,'
-                . 'description, publisher,status, starts,ends) VALUES (:name,'
-                . ':url,'
-                . ' :description, :publisher,:status, :starts,:ends) RETURNING id');
- 
-        $query->execute(array('name' => $this->name,
+                . 'url,description,'
+        .  'teacher_id,'
+                . ' publisher,status, starts,ends)'
+                . ' VALUES (:name,:url,:description,'
+      . ';teacher_id,'
+                . ' :publisher,:status, :starts,:ends) RETURNING id');
+
+        $query->execute(array(
+            'teacher_id'=>$this->teacher_id,
+            'name' => $this->name,
             'url' => $this->url,
+            
             'description' => $this->description, 'publisher' => $this->publisher, 'status' => $this->status, 'starts' => $this->starts, 'ends' => $this->ends));
         // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
         $row = $query->fetch();
@@ -52,7 +59,8 @@ class Course extends BaseModel {
 
         return $errors;
     }
-     public function validate_publisher() {
+
+    public function validate_publisher() {
         $errors = array();
         if ($this->publisher == '' || $this->publisher == null) {
             $errors[] = 'Julkaisijan nimi ei saa olla tyhjä!';
@@ -87,19 +95,21 @@ class Course extends BaseModel {
     }
 
     public function update() {
-        $query = DB::connection()->prepare('UPDATE course SET url=:url,starts=:starts,ends=:ends,publisher=:publisher,name=:name,description=:description,status=:status WHERE id=:id');
+        $query = DB::connection()->prepare('UPDATE course SET url=:url,teacher_id=;teacher_id,'
+                . 'starts=:starts,ends=:ends,publisher=:publisher,name=:name,'
+                . 'description=:description,status=:status WHERE id=:id');
 
         $query->execute(array(
-           'name' => $this->name ,
-           'description' => $this->description, 
-            'id' => $this->id, 
-          'status' => $this->status,
+            'name' => $this->name,
+            'teacher_id'=>$this->teacher_id,
+            'description' => $this->description,
+            'id' => $this->id,
+            'status' => $this->status,
             'starts' => $this->starts,
             'ends' => $this->ends,
-           'url' => $this->url,
+            'url' => $this->url,
             'publisher' => $this->publisher
         ));
-
     }
 
     public static function find($id) {
@@ -125,10 +135,12 @@ class Course extends BaseModel {
 
         return null;
     }
+
     public function destroy() {
         $query = DB::connection()->prepare('DELETE FROM course WHERE id=:id');
         $query->execute(array('id' => $this->id));
     }
+
 //    public function join() {
 //        $query = DB::connection()->prepare('INSERT INTO participants(studentsnumber,fullname) RETURNING id');
 ////        $query = DB::connection()->prepare('INSERT INTO course(students) VALUES WHERE id=:id');
@@ -136,8 +148,4 @@ class Course extends BaseModel {
 //        $row = $query->fetch();
 //        $this->id = $row['id'];
 //    }
-    
-
-    
-
 }

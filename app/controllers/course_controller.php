@@ -22,13 +22,15 @@ class CourseController extends BaseController {
         $params = $_POST;
         // Alustetaan uusi Course-luokan olion käyttäjän syöttämillä arvoilla
         $attributes = new Course(array(
-            'name' => $params['name'],
+            'teacher_id' =>  self::get_student_logged_in()->id                ,
             'publisher' => $params['publisher'],
             'status' => $params['status'],
             'starts' => $params['starts'],
             'ends' => $params['ends'],
             'url' => $params['url'],
-            'description' => $params['description']
+            'description' => $params['description'],
+            'name' => $params['name']
+            
         ));
 
 //         Kint::dump($params);
@@ -80,7 +82,8 @@ class CourseController extends BaseController {
         $attributes = array(
             
             'description' => $params['description'],
-            'name' => $params['name'],  
+            'name' => $params['name'], 
+            'teacher_id' => self::get_student_logged_in()->id,
             'id' => $id,
             'status' => $params['status'],
             'url' => $params['url'],
