@@ -20,6 +20,30 @@ class CourseController extends BaseController {
         self::check_logged_in();
         View::make('course/new.html');
     }
+    public static function join($id){
+       $course = Course::find($id);
+       $course->join();
+
+//        $attributes = array(
+//            'status' => $params['status'],
+//            
+//        );
+//
+//
+//
+//        $course = new Course($attributes);
+//        $errors = $course->errors();
+//
+//        if (count($errors) > 0) {
+//            View::make('course/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+//        } else {
+//
+//            $course->update();
+//
+//            Redirect::to('/course/' . $course->id, array('message' => 'Kurssia on muokattu onnistuneesti!'));
+//        }
+        
+    }
 
     public static function store() {
         // POST-pyynnön muuttujat sijaitsevat $_POST nimisessä assosiaatiolistassa
@@ -134,7 +158,8 @@ class CourseController extends BaseController {
 
     public static function show($id) {
         $course = Course::find($id);
-        View::make('course/show.html', array('course' => $course));
+        $participants = Participant::find_participants($id);
+        View::make('course/show.html', array('course' => $course,'participants' => $participants));
     }
 
 }

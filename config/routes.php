@@ -15,12 +15,14 @@ CourseController::create();}
 $routes->get('/course/:id', function($id) {
 CourseController::show($id);
 });
-$routes->get('/course/:id/join', function() {
-
-ParticipantsController::join();
+$routes->get('/course/:id/join', function($id) {
+//liittymisen lomakkeen esittäminen
+ParticipantsController::join($id);
 });
-$routes->post('/participate', function() {
-ParticipantsController::participate();
+$routes->post('/course/:id/participate', function($id) {
+    //varsinainen liittyminen
+CourseController::join($id);ParticipantsController::participate($id);
+
 });
 
 

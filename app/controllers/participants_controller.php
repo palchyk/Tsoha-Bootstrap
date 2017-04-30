@@ -2,27 +2,36 @@
 
 class ParticipantsController extends BaseController {
 
-    public static function join() {
+    public static $id;
+
+    public static function join($id) {
         self::check_logged_in();
-        View::make('course/join.html');
+        $course = Course::find($id);
+        View::make('course/join.html', array('course' => $course));
     }
 
-    public static function participate() {
-        $params = $_POST;
+//    public static function save_id($id){
+//        $this->id=$id;
+//    }
 
-        $attributes = new Participants(array(
+    public static function participate($id) {
+        $params = $_POST;
+        $course = Course::find($id);
+
+        $attributes = new Participant(array(
             'studentnumber' => $params['studentnumber'],
             'fullname' => $params['fullname'],
-            'participant_id' => 0
-//            self::get_student_logged_in()->id,
+            'participant_id' => self::get_student_logged_in()->id,
+            'course_id' => $id,
         ));
-        $participants = new Participants($attributes);
-        $errors = $participants->errors();
+        $participant = new Participant($attributes);
+        $errors = $participant->errors();
         if (count($errors) == 0) {
-            $participants->save();
+            $participant->save();
 
-
-            Redirect::to('/', array('message' => 'Ilmoittauduit!'));
+            Redirect::to('/course/' . $course->id, array('message' => 'Ilmoittauduit kurssille!')
+            );
+//            Redirect::to('/', array('message' => 'Ilmoittauduit!'));
         } else {
 
             View::make('course/join.html', array('errors' => $errors, 'attributes' => $attributes));

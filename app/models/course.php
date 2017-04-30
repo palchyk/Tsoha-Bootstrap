@@ -94,7 +94,11 @@ class Course extends BaseModel {
 
         return $courses;
     }
-
+    public function join(){
+        $query = DB::connection()->prepare('UPDATE course SET status=:status-1 WHERE id=:id');
+        $query->execute(array('status' => $this->status,'id' => $this->id));
+        
+    }
     public function update() {
         $query = DB::connection()->prepare('UPDATE course SET url=:url,'
 //                . 'teacher_id=;teacher_id,'
