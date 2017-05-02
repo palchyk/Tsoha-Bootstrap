@@ -52,7 +52,7 @@ $routes->post('/course/:id/destroy', function($id) {
 
 CourseController::destroy($id);
 });
-$routes->get('/course/:id/remove_participant/:pid', function($pid) {
+$routes->post('/course/:id/remove_participant/:pid', function($pid) {
 
     ParticipantsController::destroy($pid);
 });

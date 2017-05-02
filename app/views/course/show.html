@@ -107,9 +107,9 @@
                         <tr>
                             <td>{{participant.fullname}}</td>
                             <td>{{participant.studentnumber}}</td> 
-                            <td><a class="btn btn-danger btn-sm" 
-                                   href="{{base_path}}/course/{{course.id}}/remove_participant/{{participant.pid}}">
-                                    Poista{{participant.pid}}</a></td>                            
+                            <td><form method="post" action="{{base_path}}/course/{{course.id}}/remove_participant/{{participant.pid}}" style="display: inline-table;">
+                        <button type="submit" class="btn btn-danger">Poista osallistuja</button></td>
+                                                       
                         </tr>
                         {% endfor %}
                     </tbody>

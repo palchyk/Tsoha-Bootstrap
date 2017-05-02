@@ -89,7 +89,7 @@ class Participant extends BaseModel {
     }
 
     public static function find($pid) {
-        $query = DB::connection()->prepare('SELECT * FROM Participant WHERE pid = :pid ');
+        $query = DB::connection()->prepare('SELECT * FROM Participant WHERE pid = :pid LIMIT 1');
         $query->execute(array('pid' => $pid));
         $row = $query->fetch();
 
@@ -103,11 +103,11 @@ class Participant extends BaseModel {
             ));
 
             return $participant;
-//            Redirect::to('/', array('message' => 'Osallistuja on olemassa!'));
+
         }else{
 
         return null;}
-//        Redirect::to('/', array('message' => 'Osallistuja ei ole olemassa!'));
+
     }
 
 //    public function join() {

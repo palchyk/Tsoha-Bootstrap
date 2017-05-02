@@ -11,12 +11,12 @@ class ParticipantsController extends BaseController {
     }
 
     public static function destroy($pid) {
-//        self::check_logged_in();
+        self::check_logged_in();
 //        $course = Course::find($course_id);
         $participant = Participant::find($pid);
         
         if($participant==null){
-            Redirect::to('/', array('message' => 'Osallistuja ei ole olemassa!'));
+            Redirect::to('/', array('message' => 'Osallistuja ei löytynyt!'));
         }
 //        Redirect::to('/', array('message' => 'Osallistuja on poistettu onnistuneesti!'));
 //        $course = Course::find($id);
