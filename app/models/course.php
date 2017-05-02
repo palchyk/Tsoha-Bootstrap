@@ -138,11 +138,13 @@ class Course extends BaseModel {
 
             return $course;
         }
-
+        
         return null;
     }
 
     public function destroy() {
+         $query = DB::connection()->prepare('DELETE FROM participant WHERE course_id=:id');
+         $query->execute(array('id' => $this->id));
         $query = DB::connection()->prepare('DELETE FROM course WHERE id=:id');
         $query->execute(array('id' => $this->id));
     }

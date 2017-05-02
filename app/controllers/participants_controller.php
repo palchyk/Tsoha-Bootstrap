@@ -2,7 +2,7 @@
 
 class ParticipantsController extends BaseController {
 
-    public static $id;
+//    public static $id;
 
     public static function join($id) {
         self::check_logged_in();
@@ -10,6 +10,26 @@ class ParticipantsController extends BaseController {
         View::make('course/join.html', array('course' => $course));
     }
 
+    public static function destroy($pid) {
+//        self::check_logged_in();
+//        $course = Course::find($course_id);
+        $participant = Participant::find($pid);
+        
+        if($participant==null){
+            Redirect::to('/', array('message' => 'Osallistuja ei ole olemassa!'));
+        }
+//        Redirect::to('/', array('message' => 'Osallistuja on poistettu onnistuneesti!'));
+//        $course = Course::find($id);
+//        if ($course->teacher_id == self::get_student_logged_in()->id) {//
+//        $participant = new Participant(array('pid' => $pid));
+        else{$participant = new Participant(array('pid' => $pid));$participant->destroy();
+//        } else {
+//                    Redirect::to('/course/' . $course->id, array('message' => 'Et voi poistaa toisten kursseja!'));
+        Redirect::to('/', array('message' => 'Osallistuja on poistettu onnistuneesti!'));
+    }}
+
+//    }
+//         else Redirect::to('/course/' . $course->id, array('message' => 'Et voi poistaa osallistujia jos et ole kursin ylläpitäjä'));
 //    public static function save_id($id){
 //        $this->id=$id;
 //    }

@@ -52,6 +52,10 @@ $routes->post('/course/:id/destroy', function($id) {
 
 CourseController::destroy($id);
 });
+$routes->get('/course/:id/remove_participant/:pid', function($pid) {
+
+    ParticipantsController::destroy($pid);
+});
 $routes->get('/user/register', function(){
 UserController::register();
 });
@@ -78,6 +82,4 @@ UserController::logout();
 //$routes->get('/kurssit/1/edit', function() {
 //    HelloWorldController::course1edit();
 //});
-$routes->get('/kirjaudu', function() {
-HelloWorldController::login();
-});
+

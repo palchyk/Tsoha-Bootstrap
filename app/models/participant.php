@@ -2,7 +2,7 @@
 
 class Participant extends BaseModel {
 
-    public $fullname, $studentnumber, $participant_id, $course_id, $status;
+    public $pid, $fullname, $studentnumber, $participant_id, $course_id;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -33,7 +33,6 @@ class Participant extends BaseModel {
         return $errors;
     }
 
-
     public static function find_participants($id) {
         //Tietokantayhteyden alustaminen
         $query = DB::connection()->prepare('SELECT * FROM Participant WHERE course_id = :id');
@@ -44,16 +43,18 @@ class Participant extends BaseModel {
 
         foreach ($rows as $row) {
             //käyttäjänimen hakeminen show-näkymää varten
-            $participant = Student::find($row['participant_id']);         
+            $participant = Participant::find($row['participant_id']);
             $participants[] = array(
+                'pid' => $row['pid'],
                 'participant_id' => $row['participant_id'],
                 'course_id' => $row['course_id'],
                 'fullname' => $row['fullname'],
                 'studentnumber' => $row['studentnumber'],
-             
             );
         }
+        return $participants;
     }
+
 //     public static function find($id) {
 //        $query = DB::connection()->prepare('SELECT * FROM Participant WHERE id = :id LIMIT 1');
 //        $query->execute(array('id' => $id));
@@ -73,11 +74,40 @@ class Participant extends BaseModel {
 //        $query = DB::connection()->prepare('UPDATE course SET status=:status-1 WHERE id=:course_id');
 //        $query->execute(array('status' => $this->status));
         $query = DB::connection()->prepare('INSERT INTO Participant (participant_id,fullname,studentnumber,course_id) '
-                . 'VALUES (:participant_id,:fullname,:studentnumber,:course_id) RETURNING id');
+                . 'VALUES (:participant_id,:fullname,:studentnumber,:course_id) RETURNING pid');
         $query->execute(array('course_id' => $this->course_id, 'participant_id' => $this->participant_id, 'fullname' => $this->fullname,
             'studentnumber' => $this->studentnumber));
         $row = $query->fetch();
-        $this->id = $row['id'];
+        $this->pid = $row['pid'];
+    }
+
+    public function destroy() {
+        $query = DB::connection()->prepare('DELETE FROM participant WHERE pid=:pid');
+        $query->execute(array('pid' => $this->pid));
+//        $query->execute(array('pid' => $this->pid));
+        
+    }
+
+    public static function find($pid) {
+        $query = DB::connection()->prepare('SELECT * FROM Participant WHERE pid = :pid ');
+        $query->execute(array('pid' => $pid));
+        $row = $query->fetch();
+
+        if ($row) {
+            $participant = new Participant(array(
+                'pid' => $row['pid'],
+                'participant_id' => $row['participant_id'],
+                'course_id' => $row['course_id'],
+                'fullname' => $row['fullname'],
+                'studentnumber' => $row['studentnumber'],
+            ));
+
+            return $participant;
+//            Redirect::to('/', array('message' => 'Osallistuja on olemassa!'));
+        }else{
+
+        return null;}
+//        Redirect::to('/', array('message' => 'Osallistuja ei ole olemassa!'));
     }
 
 //    public function join() {
