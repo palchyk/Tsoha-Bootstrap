@@ -74,8 +74,8 @@ class Course extends BaseModel {
     }
     public function validate_status() {
         $errors = array();
-        if (is_integer($this->status)) {
-            $errors[] = 'Statuksen on oltava numero';
+        if (($this->status)<0) {
+            $errors[] = 'Status ei saa olla pienempi kuin nolla ';
         }
         if ($this->status == '') {
             $errors[] = 'Statuksessa on oltava sisältöä';
