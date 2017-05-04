@@ -8,9 +8,9 @@ Yleisiä linkkejä:
 
 Muita linkkejä:
 
-* [Listaussivu(sama kuin etusivu)](http://palchyk.users.cs.helsinki.fi/tsoha/)
-* [Muokkaussivu esimerkki](http://palchyk.users.cs.helsinki.fi/tsoha/course/8/edit)
-* [Esittelysivut](http://palchyk.users.cs.helsinki.fi/tsoha/course/8)
+* [Listaussivu (sama kuin etusivu)](http://palchyk.users.cs.helsinki.fi/tsoha/)
+* [Muokkaussivu esimerkki](http://palchyk.users.cs.helsinki.fi/tsoha/course/73/edit)
+* [Esittelysivut](http://palchyk.users.cs.helsinki.fi/tsoha/course/73)
 * [Kurssin luomisen sivu(vaatii kirjautumisen)](http://palchyk.users.cs.helsinki.fi/tsoha/course/new)
 
 ## Työn aihe
