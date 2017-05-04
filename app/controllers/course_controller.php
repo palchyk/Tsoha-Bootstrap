@@ -10,19 +10,38 @@ class CourseController extends BaseController {
     public static function edit($id) {
         self::check_logged_in();
         $course = Course::find($id);
-        if ( $course->teacher_id == self::get_student_logged_in()->id) {
-        View::make('course/edit.html', array('course' => $course));
-        }else  Redirect::to('/course/' . $course->id, array('message' => 'Et voi muokata toisten kursseja!')
-                );
+        if ($course->teacher_id == self::get_student_logged_in()->id) {
+            View::make('course/edit.html', array('course' => $course));
+        } else
+            Redirect::to('/course/' . $course->id, array('message' => 'Et voi muokata toisten kursseja!')
+            );
+    }
+
+//    public static function check_joined($id) {
+//        self::check_logged_in();
+//        if (check_joined($id)) {
+//            Redirect::to('/' , array('message' => 'Olet jo liittynyt!'));
+//        } else
+//            Redirect::to('/' , array('message' => 'Et ole liittynyt!'));
+//    }
+
+    public static function check_owned() {
+        self::check_logged_in();
+        $course = Course::find($id);
+        if ($course->teacher_id == self::get_student_logged_in()->id) {
+            return true;
+        } else
+            return false;
     }
 
     public static function create() {
         self::check_logged_in();
         View::make('course/new.html');
     }
-    public static function join($id){
-       $course = Course::find($id);
-       $course->join();
+
+    public static function join($id) {
+        $course = Course::find($id);
+        $course->join();
 
 //        $attributes = array(
 //            'status' => $params['status'],
@@ -42,7 +61,6 @@ class CourseController extends BaseController {
 //
 //            Redirect::to('/course/' . $course->id, array('message' => 'Kurssia on muokattu onnistuneesti!'));
 //        }
-        
     }
 
     public static function store() {
@@ -135,13 +153,14 @@ class CourseController extends BaseController {
     }
 
     public static function destroy($id) {
-        self::check_logged_in(); 
+        self::check_logged_in();
         $course = Course::find($id);
-         if ( $course->teacher_id == self::get_student_logged_in()->id) {//
-        $course = new Course(array('id' => $id));
-        $course->destroy();
-         Redirect::to('/', array('message' => 'Kurssi on poistettu onnistuneesti!'));}
-         else Redirect::to('/course/' . $course->id, array('message' => 'Et voi poistaa toisten kursseja!'));
+        if ($course->teacher_id == self::get_student_logged_in()->id) {//
+            $course = new Course(array('id' => $id));
+            $course->destroy();
+            Redirect::to('/', array('message' => 'Kurssi on poistettu onnistuneesti!'));
+        } else
+            Redirect::to('/course/' . $course->id, array('message' => 'Et voi poistaa toisten kursseja!'));
     }
 
 //    public static function join() {
@@ -159,7 +178,7 @@ class CourseController extends BaseController {
     public static function show($id) {
         $course = Course::find($id);
         $participants = Participant::find_participants($id);
-        View::make('course/show.html', array('course' => $course,'participants' => $participants));
+        View::make('course/show.html', array('course' => $course, 'participants' => $participants));
     }
 
 }

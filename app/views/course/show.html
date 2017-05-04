@@ -23,10 +23,12 @@
 {% endif %}
 <!-- ... -->
 
+
 <h1>{{course.name}}</h1>
+
 </p> <p>
     <!-- Painikkeet tähän -->
-    {% if true %}
+   
 <div class="container">  
     <!-- Trigger the modal with a button -->
     <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#myModal">Poista kurssi</button>
@@ -53,9 +55,11 @@
         </div>
     </div>
     <a href="{{base_path}}/course/{{course.id}}/edit" class="btn btn-default">Muokkaa</a>
-    {% endif %}
+    
     {% if course.status>0 %}
+    {% if course.check_joined(student_logged_in.id, course.id) %}
     <a href="{{base_path}}/course/{{course.id}}/join" class="btn btn-success">Ilmoittaudu kurssille</a>
+    {% endif %}
     {% endif %}
     {% if want_to_join %}
     {% endif %}
@@ -64,7 +68,9 @@
     </form>
     <!-- Tiedot tulee listana tähän -->
 <ul>
+    {% if course. teacher_id>0 %}
     <li><strong>Alkamispäivä:</strong> {{course.starts}}</li>
+    {% endif %}
     <li><strong>Päättymispäivä:</strong> {{course.ends}}</li>
     <li><strong>Onko tilaa:</strong>
         {% if course. status>0 %}
@@ -95,9 +101,9 @@
                         <tr>
                             <th>Nimi:</th>
                             <th>Opiskelijatunnus:</th>
-                            <th>Poista osalluistujia:</th>
-                            {% if get_student_logged_in.name==course.teacher_id %}
-
+                           {% if course. teacher_id==student_logged_in.id %}
+                            <th>Poista osalluistujia:</th>                           
+                            
                             {% endif %}
                         </tr>
                     </thead>
@@ -107,13 +113,16 @@
                         <tr>
                             <td>{{participant.fullname}}</td>
                             <td>{{participant.studentnumber}}</td> 
-                            <td><form method="post" action="{{base_path}}/course/{{course.id}}/remove_participant/{{participant.pid}}" style="display: inline-table;">
+                            {% if course. teacher_id==student_logged_in.id %}
+                            <td><form method="post" action="{{base_path}}/remove_participant/{{participant.pid}}" style="display: inline-table;">
                         <button type="submit" class="btn btn-danger">Poista osallistuja</button></td>
-                                                       
+                              {% endif %}                         
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                
+
 
 
 

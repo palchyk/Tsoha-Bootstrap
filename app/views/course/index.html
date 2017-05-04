@@ -24,7 +24,7 @@
             <th>Päättymispäivä</th>
             <th>Pitäjä</th>
             <th>Status</th>
-            <th></th>
+            <th>Ilmoittautuminen</th>
         </tr>
     </thead>
 
@@ -42,9 +42,11 @@
                     <label class="label label-danger">ei tilaa
                         {% endif %}
                         </td>
-                        {% if course.status > 0 %}    
+                        {% if course.status > 0 %}
+                       {% if course.check_joined(student_logged_in.id, course.id) %}
                         <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.id}}/join">Ilmoittaudu</a></td>
                         {% endif %}
+                         {% endif %}
                         </tr>
                         {% endfor %}
                         </tbody>

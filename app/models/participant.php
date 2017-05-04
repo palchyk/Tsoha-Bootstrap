@@ -17,6 +17,9 @@ class Participant extends BaseModel {
         if (strlen($this->fullname) < 3) {
             $errors[] = 'Nimen pituuden tulee olla vähintään kolme merkkiä!';
         }
+        if (strlen($this->fullname) > 20) {
+            $errors[] = 'Nimen pituuden tulee olla maksimissaan 20 merkkiä!';
+        }
 
         return $errors;
     }
@@ -28,6 +31,9 @@ class Participant extends BaseModel {
         }
         if (strlen($this->studentnumber) < 5) {
             $errors[] = 'Tunnuksen pituuden tulee olla vähintään viisi merkkiä!';
+        }
+        if (strlen($this->studentnumber) > 20) {
+            $errors[] = 'Tunnuksen pituuden tulee olla maksimissaan 20 merkkiä!';
         }
 
         return $errors;
@@ -109,6 +115,20 @@ class Participant extends BaseModel {
         return null;}
 
     }
+     public static function find_owner($pid) {
+          $query = DB::connection()->prepare('SELECT * FROM Student WHERE id = :id LIMIT 1');
+        $query->execute(array('id' => $id));
+        $row = $query->fetch();
+        if ($row) {
+            $user = new Student(array(
+                'id' => $row['id'],
+                'username' => $row['username'],
+                'password' => $row['password']
+            ));
+            return $user;
+        }
+        return null;
+     }
 
 //    public function join() {
 //        $query = DB::connection()->prepare('INSERT INTO Participants(studentnumber,fullname) RETURNING id');

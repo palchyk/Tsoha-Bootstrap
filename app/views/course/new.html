@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Lisää kurssi kirjastoosi</h1>
+<h1>Lisää kurssi kurssitarjontaan!</h1>
 {% if errors %}
     <div class="alert alert-danger">
       <ul>
@@ -12,36 +12,36 @@
   {% endif %}
 <form method="post" action="{{base_path}}/course">
     <div class="form-group">
-        <label>Nimi</label>
+        <label>Kurssin nimi:</label>
         <input type="text" name="name" class="form-control">
     </div>
 
     <div class="form-group">
-        <label>Pitäjä</label>
+        <label>Pitäjä:</label>
         <input type="text" name="publisher" class="form-control">
     </div>
     <div class="form-group">
-        <label>Tilaa(opiskelijamäärä)</label>
+        <label>Tila (opiskelijamäärä numeromuodossa):</label>
         <input  name="status" class="form-control">
     </div>
 
     <div class="form-group">
-        <label>Alkamispäivä (vvvv-kk-pp)</label>
+        <label>Alkamispäivä (vvvv-kk-pp):</label>
         <input type="text" name="starts" class="form-control">
     </div>
 
     <div class="form-group">
-        <label>Päättymispäivä (vvvv-kk-pp)</label>
+        <label>Päättymispäivä (vvvv-kk-pp):</label>
         <input name="ends" class="form-control"></input>
     </div>
     <div class="form-group">
-        <label>Kuvaus</label>
+        <label>Lyhyt kuvaus:</label>
       
         <textarea class="form-control" name="description" rows="5" id="comment"></textarea>
     </div>
     <div class="form-group">
         <label>Linkki (youtube videon embded koodin "src"-sisältö). Mikäli ei ole videota jätä tyhjäksi.</label>
-        <textarea name="url" class="form-control"></textarea>
+        <input name="url" class="form-control"></input>
     </div>
     
 

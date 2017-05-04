@@ -11,7 +11,7 @@ class Course extends BaseModel {
     // Konstruktori
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_name', 'validate_description', 'validate_publisher');
+        $this->validators = array('validate_name', 'validate_description', 'validate_publisher','validate_status');
 //        new Participants($attributes);
     }
 
@@ -72,6 +72,17 @@ class Course extends BaseModel {
 
         return $errors;
     }
+    public function validate_status() {
+        $errors = array();
+        if (is_integer($this->status)) {
+            $errors[] = 'Statuksen on oltava numero';
+        }
+        if ($this->status == '') {
+            $errors[] = 'Statuksessa on oltava sisältöä';
+        }
+
+        return $errors;
+    }
 
     public static function all() {
         $query = DB::connection()->prepare('SELECT * FROM Course');
@@ -94,11 +105,12 @@ class Course extends BaseModel {
 
         return $courses;
     }
-    public function join(){
+
+    public function join() {
         $query = DB::connection()->prepare('UPDATE course SET status=:status-1 WHERE id=:id');
-        $query->execute(array('status' => $this->status,'id' => $this->id));
-        
+        $query->execute(array('status' => $this->status, 'id' => $this->id));
     }
+
     public function update() {
         $query = DB::connection()->prepare('UPDATE course SET url=:url,'
 //                . 'teacher_id=;teacher_id,'
@@ -116,6 +128,16 @@ class Course extends BaseModel {
             'url' => $this->url,
             'publisher' => $this->publisher
         ));
+    }
+
+    public static function check_joined($id,$cid) {
+        $query = DB::connection()->prepare('SELECT * FROM Participant WHERE participant_id = :id AND course_id = :cid LIMIT 1');
+        $query->execute(array('id' => $id,'cid' => $cid));
+        $row = $query->fetch();
+        if ($row) {
+            return false;
+        } else
+            return true;
     }
 
     public static function find($id) {
@@ -138,13 +160,13 @@ class Course extends BaseModel {
 
             return $course;
         }
-        
+
         return null;
     }
 
     public function destroy() {
-         $query = DB::connection()->prepare('DELETE FROM participant WHERE course_id=:id');
-         $query->execute(array('id' => $this->id));
+        $query = DB::connection()->prepare('DELETE FROM participant WHERE course_id=:id');
+        $query->execute(array('id' => $this->id));
         $query = DB::connection()->prepare('DELETE FROM course WHERE id=:id');
         $query->execute(array('id' => $this->id));
     }

@@ -21,7 +21,8 @@ ParticipantsController::join($id);
 });
 $routes->post('/course/:id/participate', function($id) {
     //varsinainen liittyminen
-CourseController::join($id);ParticipantsController::participate($id);
+CourseController::join($id);
+ParticipantsController::participate($id);
 
 });
 
@@ -52,9 +53,10 @@ $routes->post('/course/:id/destroy', function($id) {
 
 CourseController::destroy($id);
 });
-$routes->post('/course/:id/remove_participant/:pid', function($pid) {
+$routes->post('/remove_participant/:pid', function($pid) {
 
     ParticipantsController::destroy($pid);
+    
 });
 $routes->get('/user/register', function(){
 UserController::register();

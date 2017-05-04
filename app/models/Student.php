@@ -83,6 +83,9 @@ class Student extends BaseModel {
         if (strlen($this->username) > 20) {
             $errors[] = 'Liian pitkä nimi (max 20 merkkiä)';
         }
+        if (strlen($this->username) < 3) {
+            $errors[] = 'Liian lyhyt nimi (min 3 merkkiä)';
+        }
         return $errors;
     }
 
@@ -93,6 +96,9 @@ class Student extends BaseModel {
         }
         if (strlen($this->password) > 50) {
             $errors[] = 'Liian pitkä salasana (max 50 merkkiä)';
+        }
+        if (strlen($this->password) <3) {
+            $errors[] = 'Liian lyhyt salasana (min 3 merkkiä)';
         }
         return $errors;
     }

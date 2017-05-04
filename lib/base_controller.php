@@ -11,7 +11,12 @@ class BaseController {
         return null;
     }
     public static function owner(){
-        
+        if (isset($_SESSION['student'])) {
+            $id = $_SESSION['student'];
+           
+            return $id;
+        }
+        return null;
     }
 
     public static function check_logged_in() {
