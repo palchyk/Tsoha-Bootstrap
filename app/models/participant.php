@@ -61,24 +61,7 @@ class Participant extends BaseModel {
         return $participants;
     }
 
-//     public static function find($id) {
-//        $query = DB::connection()->prepare('SELECT * FROM Participant WHERE id = :id LIMIT 1');
-//        $query->execute(array('id' => $id));
-//        $row = $query->fetch();
-//        if ($row) {
-//            $participant= new Participant(array(
-//                'id' => $row['id'],
-//                'fullname' => $row['fullname'],
-//                'studentnumber' => $row['studentnumber']
-//            ));
-//            return $participant;
-//        }
-//        return null;
-//    }
-
     public function save() {
-//        $query = DB::connection()->prepare('UPDATE course SET status=:status-1 WHERE id=:course_id');
-//        $query->execute(array('status' => $this->status));
         $query = DB::connection()->prepare('INSERT INTO Participant (participant_id,fullname,studentnumber,course_id) '
                 . 'VALUES (:participant_id,:fullname,:studentnumber,:course_id) RETURNING pid');
         $query->execute(array('course_id' => $this->course_id, 'participant_id' => $this->participant_id, 'fullname' => $this->fullname,
@@ -90,8 +73,6 @@ class Participant extends BaseModel {
     public function destroy() {
         $query = DB::connection()->prepare('DELETE FROM participant WHERE pid=:pid');
         $query->execute(array('pid' => $this->pid));
-//        $query->execute(array('pid' => $this->pid));
-        
     }
 
     public static function find($pid) {
@@ -109,14 +90,14 @@ class Participant extends BaseModel {
             ));
 
             return $participant;
+        } else {
 
-        }else{
-
-        return null;}
-
+            return null;
+        }
     }
-     public static function find_owner($pid) {
-          $query = DB::connection()->prepare('SELECT * FROM Student WHERE id = :id LIMIT 1');
+
+    public static function find_owner($pid) {
+        $query = DB::connection()->prepare('SELECT * FROM Student WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $id));
         $row = $query->fetch();
         if ($row) {
@@ -128,12 +109,6 @@ class Participant extends BaseModel {
             return $user;
         }
         return null;
-     }
+    }
 
-//    public function join() {
-//        $query = DB::connection()->prepare('INSERT INTO Participants(studentnumber,fullname) RETURNING id');
-//        $query->execute(array('studentnumber' => $this->studentnumber, 'fullname' => $this->fullname));
-//        $row = $query->fetch();
-//        $this->id = $row['id'];
-//    }
 }

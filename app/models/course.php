@@ -11,8 +11,7 @@ class Course extends BaseModel {
     // Konstruktori
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_name', 'validate_description', 'validate_publisher','validate_status');
-//        new Participants($attributes);
+        $this->validators = array('validate_name', 'validate_description', 'validate_publisher', 'validate_status');
     }
 
     public function save() {
@@ -72,9 +71,10 @@ class Course extends BaseModel {
 
         return $errors;
     }
+
     public function validate_status() {
         $errors = array();
-        if (($this->status)<0) {
+        if (($this->status) < 0) {
             $errors[] = 'Status ei saa olla pienempi kuin nolla ';
         }
         if ($this->status == '') {
@@ -113,13 +113,11 @@ class Course extends BaseModel {
 
     public function update() {
         $query = DB::connection()->prepare('UPDATE course SET url=:url,'
-//                . 'teacher_id=;teacher_id,'
                 . 'starts=:starts,ends=:ends,publisher=:publisher,name=:name,'
                 . 'description=:description,status=:status WHERE id=:id');
 
         $query->execute(array(
             'name' => $this->name,
-//            'teacher_id'=>$this->teacher_id,
             'description' => $this->description,
             'id' => $this->id,
             'status' => $this->status,
@@ -130,9 +128,9 @@ class Course extends BaseModel {
         ));
     }
 
-    public static function check_joined($id,$cid) {
+    public static function check_joined($id, $cid) {
         $query = DB::connection()->prepare('SELECT * FROM Participant WHERE participant_id = :id AND course_id = :cid LIMIT 1');
-        $query->execute(array('id' => $id,'cid' => $cid));
+        $query->execute(array('id' => $id, 'cid' => $cid));
         $row = $query->fetch();
         if ($row) {
             return false;
@@ -171,11 +169,4 @@ class Course extends BaseModel {
         $query->execute(array('id' => $this->id));
     }
 
-//    public function join() {
-//        $query = DB::connection()->prepare('INSERT INTO participants(studentsnumber,fullname) RETURNING id');
-////        $query = DB::connection()->prepare('INSERT INTO course(students) VALUES WHERE id=:id');
-//        $query->execute(array('studentsnumber' => $this->studentsnumber,'fullname' => $this->fullname));
-//        $row = $query->fetch();
-//        $this->id = $row['id'];
-//    }
 }
