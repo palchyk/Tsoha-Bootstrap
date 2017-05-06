@@ -9,6 +9,8 @@ class Participant extends BaseModel {
         $this->validators = array('validate_studentnumber', 'validate_fullname');
     }
 
+    
+
     public function validate_fullname() {
         $errors = array();
         if ($this->fullname == '' || $this->fullname == null) {

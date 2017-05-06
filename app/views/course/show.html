@@ -18,15 +18,15 @@
 </div>
 {% endif %}
 
-{% if get_student_logged_in %}
-<h1> {{get_student_logged_in.name}} </h1>
-{% endif %}
-<!-- ... -->
+
+
+<!-- <h1>{{course.teacher_id}}</h1> -->
 
 
 <h1>{{course.name}}</h1>
 
 </p> <p>
+<body background="http://cdn.wallpapersafari.com/32/50/NGIlEC.jpg"></body>
 
 <div class="container">  
     <!-- Trigger the modal with a button -->
@@ -39,13 +39,17 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
+
+
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title"><strong>Varoitus!</strong> </h4>
                 </div>
                 <div class="modal-body">
                     <p>Oletko varma, että haluat poistaa kurssin: "{{course.name}}"?</p>
+                      
                 </div>
                 <div class="modal-footer">
+                      
                     <form method="post" action="{{base_path}}/course/{{course.id}}/destroy" style="display: inline-table;">
                         <button type="submit" class="btn btn-danger">Kyllä, poista kurssi</button>
                 </div>  
@@ -110,10 +114,11 @@
                         <tr>
                             <td>{{participant.fullname}}</td>
                             <td>{{participant.studentnumber}}</td> 
-                            {% if course. teacher_id==student_logged_in.id %}
+                            {% if course. teacher_id==student_logged_in.id  %}
                             <td><form method="post" action="{{base_path}}/remove_participant/{{participant.pid}}" style="display: inline-table;">
                                     <button type="submit" class="btn btn-danger">Poista osallistuja</button></td>
-                            {% endif %}                         
+                            {% endif %}  
+                            
                         </tr>
                         {% endfor %}
                     </tbody>

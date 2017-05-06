@@ -11,7 +11,9 @@ class Course extends BaseModel {
     // Konstruktori
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_name', 'validate_description', 'validate_publisher', 'validate_status');
+        $this->validators = array('validate_name', 'validate_publisher', 'validate_status','validate_starts','validate_ends',
+            'validate_description'
+             );
     }
 
     public function save() {
@@ -44,6 +46,23 @@ class Course extends BaseModel {
         if (strlen($this->name) < 3) {
             $errors[] = 'Nimen pituuden tulee olla vähintään kolme merkkiä!';
         }
+        if (strlen($this->name) > 50) {
+            $errors[] = 'Nimen pituuden tulee olla enintään viisikymmentä merkkiä!';
+        }
+
+        return $errors;
+    }
+    public function validate_publisher() {
+        $errors = array();
+        if ($this->publisher == '' || $this->publisher == null) {
+            $errors[] = 'Pitäjän nimi ei saa olla tyhjä!';
+        }
+        if (strlen($this->publisher) < 10) {
+            $errors[] = 'Pitäjän nimen pituuden tulee olla vähintään kymmenen merkkiä!';
+        }
+        if (strlen($this->publisher) > 50) {
+            $errors[] = 'Pitäjän nimen pituuden tulee olla enintään viisikymmentä merkkiä!';
+        }
 
         return $errors;
     }
@@ -56,32 +75,65 @@ class Course extends BaseModel {
         if (strlen($this->description) < 10) {
             $errors[] = 'Kuvauksen pituuden tulee olla vähintään kymmenen merkkiä!';
         }
-
-        return $errors;
-    }
-
-    public function validate_publisher() {
-        $errors = array();
-        if ($this->publisher == '' || $this->publisher == null) {
-            $errors[] = 'Julkaisijan nimi ei saa olla tyhjä!';
-        }
-        if (strlen($this->description) < 10) {
-            $errors[] = 'Julkaisijan nimen pituuden tulee olla vähintään kymmenen merkkiä!';
+        if (strlen($this->description) > 400) {
+            $errors[] = 'Kuvauksen pituuden tulee olla enintään neljäsataa merkkiä!';
         }
 
         return $errors;
     }
+
+    
 
     public function validate_status() {
         $errors = array();
         if (($this->status) < 0) {
-            $errors[] = 'Status ei saa olla pienempi kuin nolla ';
+            $errors[] = 'Tila ei saa olla pienempi kuin nolla!';
+        }
+        if ($this->status > 500) {
+            $errors[] = 'Tila ei saa olla yli 500!';
         }
         if ($this->status == '') {
-            $errors[] = 'Statuksessa on oltava sisältöä';
+            $errors[] = 'Tilassa on oltava sisältöä!';
+        }
+        if (is_numeric($this->status) == false) {
+            $errors[] = 'Tilan on oltava numero!';
         }
 
         return $errors;
+    }
+
+    public function validate_starts() {
+        $errors = array();
+        $test_date = $this->starts;
+        $test_arr = explode('-', $test_date);
+        if (count($test_arr) == 3&& is_numeric($test_arr[1])
+                && is_numeric($test_arr[2])
+                && is_numeric($test_arr[0])) {
+            if (checkdate( $test_arr[1],$test_arr[2], $test_arr[0]) ) {
+                
+            } else {
+                $errors[] = 'Alkupäivämäärässä on vika!';
+            }
+        } else {
+            $errors[] = 'Alkupäivämäärässä on vika!';
+        }return $errors;
+    }
+    public function validate_ends() {
+        $errors = array();
+        $test_date = $this->ends;
+        $test_arr = explode('-', $test_date);
+        if (count($test_arr) == 3&& is_numeric($test_arr[1])
+                && is_numeric($test_arr[2])
+                && is_numeric($test_arr[0])) {
+            
+            if (checkdate( $test_arr[1],$test_arr[2], $test_arr[0])) {
+                
+            } else {
+                $errors[] = 'Loppupäivämäärässä on vika!';
+            }
+        } else {
+            $errors[] = 'Loppupäivämäärässä on vika!';
+        }return $errors;
     }
 
     public static function all() {
