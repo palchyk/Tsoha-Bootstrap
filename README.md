@@ -1,5 +1,5 @@
 # Tietokantasovelluksen esittelysivu
-
+(linkit ei käytössä)
 Yleisiä linkkejä:
 
 * [Linkki etusivulle](http://palchyk.users.cs.helsinki.fi/tsoha/)
